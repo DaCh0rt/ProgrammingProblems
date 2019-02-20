@@ -4,18 +4,24 @@ public class cables{
 
 	public static void main(String[] args){
 		Scanner in = new Scanner(System.in);
+		
+		//start with at least 1 test case, n is number of points to join, file ends with 0
 		int n = in.nextInt();
-		while(n > 0){
+		while(n > 0){//test case to process?, process
+			
+			//store the points in parallel array
 			int[] px = new int[n];
 			int[] py = new int[n];
 
 			ArrayList<edge> list = new ArrayList<edge>();
 
+			//read in all points
 			for(int i = 0; i < n; i++){
 				px[i] = in.nextInt();
 				py[i] = in.nextInt();
 			}
 
+			//add all edges that you can draw in the graph using distance formula
 			for(int i = 0; i < n; i++){
 				for(int j = 0; j < n; j++){
 					double dist = Math.sqrt(Math.pow(px[i] - px[j],2) + Math.pow(py[i] - py[j],2));
@@ -24,6 +30,7 @@ public class cables{
 				}
 			}
 
+			//call kruskals on the fully connected graph to determine the minimum spanning tree.
 			System.out.printf("%.2f\n",kruskals.mst(list,n));
 
 
@@ -31,7 +38,7 @@ public class cables{
 		}
 	}
 
-	static class dset{
+	static class dset{//disjoint set class to keep track of forrests
 		public int[] parent;
 		public int[] height;
 		public int n;
