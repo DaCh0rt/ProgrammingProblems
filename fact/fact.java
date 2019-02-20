@@ -5,20 +5,30 @@ public class fact{
 
 	public static void main(String[] args){
 		Scanner in = new Scanner(System.in);
-
+		
+		//read in num cases
 		int nC = in.nextInt();
-
+		
+		//compute all the primes up to 7920 so we know them while running all the test cases
 		primeSieve(7920);
 
+		//solve each case
 		for(int i = 0; i < nC; i++){
+			//read in n which is n!
 			int n = in.nextInt();
 
+			//store ans as array list of prime factorization exponents
 			ArrayList<Integer> ans = new ArrayList<Integer>();
+			
+			//iterate thru all prime numbers <= n
 			for(int j = 2; j <= n; j++){
 				if(isPrime[j]){
 					int exp = 0;
 					int pow = 1;
 
+					//find how many numbers from the prime we are at to n the prime divides evenly into
+					//and also all the powers of the prime up to n, essentially calculating all at once what the
+					//prime exponent is in the final factorization.
 					while((int)Math.pow(j,pow) <= n){
 						int tot = 0;
 						int div = (int)Math.pow(j,pow);
@@ -36,6 +46,7 @@ public class fact{
 				}
 			}
 
+			//we are done. print out the answer
 			for(int j = 0; j < ans.size(); j++){
 				System.out.print(ans.get(j) + " ");
 			}
