@@ -3,12 +3,15 @@ import java.util.*;
 public class balloons{
 	public static void main(String[] args){
 		Scanner in = new Scanner(System.in);
+		//read in num teams, balloons in room a, balloons in room b, also assume there is 1 test case
 		int n = in.nextInt();
 		int a = in.nextInt();
 		int b = in.nextInt();
 
 		int debug = 0;
-		while (n != 0){
+		while (n != 0){//if terminating line 0 0 0 not reached (we have another test case)
+			
+			//read in teams and their needs
 			ArrayList<team> teams = new ArrayList<team>();
 			for (int i = 0; i < n; i++){
 				int k = in.nextInt();
@@ -17,14 +20,16 @@ public class balloons{
 				teams.add(new team(k,dA,dB));
 			}
 
+			//greedy sort teams
 			Collections.sort(teams);
 			if(debug > 0){
 				System.out.println(n + " " + a + " " + b);
-			for(int i = 0; i < teams.size(); i++){
-				System.out.println(teams.get(i));
-			}
+				for(int i = 0; i < teams.size(); i++){
+					System.out.println(teams.get(i));
+				}
 			}
 
+			//run thru all the teams and take the ballons they need
 			int distance = 0;
 			for(int i = 0; i < teams.size(); i++){
 				int numB = teams.get(i).nB;
@@ -64,7 +69,8 @@ public class balloons{
 				}
 				if(debug > 0) System.out.println("cumulative :" + distance);
 			}
-
+			
+			//we distributed the balloons, print out the result
 			if (debug <= 0) System.out.println(distance);
 			n = in.nextInt();
 			a = in.nextInt();
@@ -88,6 +94,7 @@ class team implements Comparable<team>{
 		return nB + " " + dA + " " + dB;
 	}
 
+	//greedy sort based on smallest difference between the distance of the two rooms for each team.
 	public int compareTo(team other){
 		return Math.abs(other.dA - other.dB) - Math.abs(this.dA - this.dB);
 	}
