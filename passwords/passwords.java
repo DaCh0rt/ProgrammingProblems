@@ -4,12 +4,18 @@ public class passwords{
 	public static int count;
 
 	public static void main(String[] args){
+		
+		//read in num cases
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
 
+		//run thru cases
 		for(int i = 0; i < n; i++){
+			
+			//get length of pass
 			int l = in.nextInt();
 
+			//read in possible chars per slot, finding max len
 			int max = 0;
 			ArrayList<String> choices = new ArrayList<String>();
 			for(int j = 0; j < l; j++){
@@ -19,36 +25,34 @@ public class passwords{
 				}		
 			}
 
+			//init used array
 			Boolean[][] used = new Boolean[l][max];
 			for(int j = 0; j < l; j++){
 				Arrays.fill(used[j],false);
 			}
 
-			// ArrayList<Boolean>[] used = new ArrayList[l];
-			// // System.out.println(l);
-			// for(int j = 0; j < l; j++){
-			// 	for(int k = 0; k < choices.size(); k++){
-			// 		used[j].add(false);
-			// 	}
-			// }
-
+			//rank to print out. aka perm
 			int rank = in.nextInt();	
 
+			//pass pas to build and perm
 			char[] pas = new char[l];
 			count = 0;
 			perm(pas,used,choices,0, rank);
-			// perm(choices, used, 0, 0, pas, rank);
 		}
 	}
 
 	public static void perm(char[] pas, Boolean[][] used, ArrayList<String> choices, int k,  int rank){
 		
+		//somehow we went too far
 		if (count >= rank)
 			return;
 
+		//if we filled out a pas
 		if (k == pas.length){
 			count++;
 			// System.out.println(count + " " + rank);
+			
+			//done, print
 			if(count == rank){
 				for(int i = 0; i < pas.length; i++){
 					System.out.print(pas[i]);
@@ -58,9 +62,9 @@ public class passwords{
 			return;
 		}
 
+		//permute over the number of choices for the slot.
 		for(int i = 0; i < choices.get(k).length(); i++){
 			if(!used[k][i]){
-				// System.out.println("fak");
 				used[k][i] = true;
 				pas[k] = choices.get(k).charAt(i);
 
@@ -69,28 +73,4 @@ public class passwords{
 			}
 		}
 	}
-
-	// public static void perm(ArrayList<String> choices, Boolean[][] used, int count, int layer, char[] pas, int rank){
-	// 	// if (count >= rank){
-	// 	// 	System.out.println(pas);
-	// 	// 	return;
-	// 	// }
-
-	// 	if (layer >= choices.size()){
-	// 		System.out.println("this aint good chief");
-	// 		return;
-	// 	}
-
-
-	// 	for(int i = 0; i < choices.get(layer).length(); i++){
-	// 		if(!(used[layer][i])){
-	// 			used[layer][i] = true;
-	// 			pas[layer] = choices.get(layer).charAt(i);
-	// 			perm(choices,used,count++,layer++,pas,rank);
-	// 			System.out.println(pas);
-	// 			used[layer][i] = false;
-	// 		}
-
-	// 	}
-	// }
 }
