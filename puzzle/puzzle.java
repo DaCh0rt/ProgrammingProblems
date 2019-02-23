@@ -1,28 +1,30 @@
 import java.util.*;
 
 public class puzzle{
+	//dy dx to find possible state branches, states to hold answers for boards
 	public static int[] dx = {1,-1}, dy = {1,-1};
 	public static HashMap<String,Integer> states = new HashMap<String,Integer>();
 
 	public static void main(String[] args){
 		Scanner in = new Scanner(System.in);
 
-		// int[][] nice = stringToPuzzle("123456780");
-		// for(int i = 0; i < 3; i++){
-		// 	for(int j = 0; j < 3; j++){
-		// 		System.out.print(nice[i][j] + " ");
-		// 	}
-		// 	System.out.println();
-		// }
-		// System.out.println(puzzleToString(nice));
-
+		//read in num cases
 		int n = in.nextInt();
-
+		
+		/* n can be very large. because of this we dont want to re compute things
+		 * we already know. solution: start from finished board and find all states
+		 * reachable from that board and record the distance. symmetry between start
+		 * and end state.
+		 */
+		
+		//stack for bfs
 		ArrayDeque<String> q = new ArrayDeque<String>();
 		
+		//put solved state in hashmap
 		int iter = 0;
 		states.put("123456780",iter);
 
+		//find the next states from start and add
 		ArrayList<String> toEnque = nextPositions("123456780");
 		for(int i = 0; i < toEnque.size(); i++){
 				states.put(toEnque.get(i),iter);
@@ -31,10 +33,13 @@ public class puzzle{
 		}
 		iter++;
 
+		//while still having nodes to bfs
 		while(!q.isEmpty()){
 			iter++;
 			int size = q.size();
 			// System.out.println("iter: " +  iter + "\tprospecting " + size + "states");
+			
+			//run thru the current queue and enque the next layer
 			for(int i = 0; i < size; i++){
 				toEnque = nextPositions(q.poll());
 
@@ -48,6 +53,7 @@ public class puzzle{
 			}
 		}
 
+		//lookup every answer
 		for(int i = 0; i < n; i++){
 			String board = "";
 			for(int j = 0; j < 9; j++){
@@ -58,6 +64,7 @@ public class puzzle{
 		}
 	}
 
+	//converts string of numbers to 2d int array
 	static int[][] stringToPuzzle(String s){
 
 		int[][] puzzle = new int[3][3];
@@ -71,6 +78,7 @@ public class puzzle{
 		return puzzle;
 	}
 
+	//converts 2d int array to string of numbers
 	static String puzzleToString(int[][] p){
 
 		String puzzle = "";
@@ -84,6 +92,7 @@ public class puzzle{
 		return puzzle;
 	}
 
+	//returns an arraylist of strings representing the next reachable states
 	static ArrayList<String> nextPositions(String s){
 
 		int[][] puzzle = stringToPuzzle(s);
