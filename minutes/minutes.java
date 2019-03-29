@@ -1,3 +1,6 @@
+// simple problem to get familiar with the online contest judge
+// no pdf and minimal test cases. simple to understand.
+
 import java.util.*;
 
 public class minutes{

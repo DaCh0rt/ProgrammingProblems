@@ -6,45 +6,40 @@ public class outofsync{
 
 		int c = in.nextInt();
 
+		//run thru cases
 		for(int i = 0; i < c; i++){
+
+			//read in n, number, and r, range
 			int n = in.nextInt();
 			long r = in.nextInt();
-			HashMap<Long,Integer> bad = new HashMap<Long,Integer>();
 
+			//init ans, prime factorize n, init prime list, init hashmap for bad values
 			long ans = 0;
 			ArrayList<pair> fact = primeFactorize(n);
 			ArrayList<Integer> prime = new ArrayList<Integer>();
-
-			// long mult = 1;
-			// int num = 2;
-			// while(mult <= r){
-			// 	boolean doit = true;
-
-				
-
-			// 	if(doit){
-			// 		for(int j = 0; j < fact.size(); j++){
-			// 			if (fact.get(j).prime == num){
-			// 				doit = false;
-			// 				break;
-			// 			}
-			// 		}
-			// 	}
-
-			// 	num++;
-			// }
+			HashMap<Long,Integer> bad = new HashMap<Long,Integer>();
 			
+			//go thru range
 			for(long j = 1; j <= r; j++){
 				if(bad.containsKey(j))
 					continue;
 
+				//assume valid, go thru prime factors of n
 				boolean valid = true;
 				for(int k = 0; k < fact.size(); k++){
+
+					//if prime a factor of j
 					if(j % fact.get(k).prime == 0){
+
+						//fail, get prime
 						valid = false;
 						long p = fact.get(k).prime;
 						long a = 2;
+
+						//run thru multiples of p that are less than or equal to r
 						while(a*p <= r){
+
+							//if not already set to bad, set bad
 							if(!bad.containsKey(a*p)){
 								bad.put(a*p,0);
 							}
@@ -53,12 +48,15 @@ public class outofsync{
 						break;
 					}
 				}
+
+				//number in range made it. add to ans.
 				if(valid){
 					ans++;
 
 				}
 			}
 
+			//done, print ans.
 			System.out.println(ans);
 		}
 	}
