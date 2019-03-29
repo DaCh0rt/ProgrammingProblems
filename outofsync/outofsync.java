@@ -15,48 +15,49 @@ public class outofsync{
 			ArrayList<pair> fact = primeFactorize(n);
 			ArrayList<Integer> prime = new ArrayList<Integer>();
 
-			long mult = 1;
-			int num = 2;
-			while(mult <= r){
-				boolean doit = true;
+			// long mult = 1;
+			// int num = 2;
+			// while(mult <= r){
+			// 	boolean doit = true;
 
 				
 
-				if(doit){
-					for(int j = 0; j < fact.size(); j++){
-						if (fact.get(j) == num){
-							doit = false;
-							break;
-						}
-					}
-				}
-
-				num++;
-			}
-			// for(long j = 1; j <= r; j++){
-			// 	if(bad.containsKey(j))
-			// 		continue;
-
-			// 	boolean valid = true;
-			// 	for(int k = 0; k < fact.size(); k++){
-			// 		if(j % fact.get(k).prime == 0){
-			// 			valid = false;
-			// 			long p = fact.get(k).prime;
-			// 			long a = 2;
-			// 			while(a*p <= r){
-			// 				if(!bad.containsKey(a*p)){
-			// 					bad.put(a*p,0);
-			// 				}
-			// 				a++;
+			// 	if(doit){
+			// 		for(int j = 0; j < fact.size(); j++){
+			// 			if (fact.get(j).prime == num){
+			// 				doit = false;
+			// 				break;
 			// 			}
-			// 			break;
 			// 		}
 			// 	}
-			// 	if(valid){
-			// 		ans++;
 
-			// 	}
+			// 	num++;
 			// }
+			
+			for(long j = 1; j <= r; j++){
+				if(bad.containsKey(j))
+					continue;
+
+				boolean valid = true;
+				for(int k = 0; k < fact.size(); k++){
+					if(j % fact.get(k).prime == 0){
+						valid = false;
+						long p = fact.get(k).prime;
+						long a = 2;
+						while(a*p <= r){
+							if(!bad.containsKey(a*p)){
+								bad.put(a*p,0);
+							}
+							a++;
+						}
+						break;
+					}
+				}
+				if(valid){
+					ans++;
+
+				}
+			}
 
 			System.out.println(ans);
 		}
